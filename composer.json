@@ -1,0 +1,17 @@
+{
+    "name": "hansdubois/marcel-blog",
+    "require": {
+        "phpunit/phpunit": "^7.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "Marcel\\": ["src/"]
+        }
+    },
+    "authors": [
+        {
+            "name": "Hans Dubois",
+            "email": "hansdub@gmail.com"
+        }
+    ]
+}
