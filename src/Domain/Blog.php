@@ -17,12 +17,15 @@ class Blog
     /** @var string */
     private $imageUrl;
 
+    /** @var int */
+    private $id;
+
     /**
      * @param string $title
      * @param string $introductionText
      * @param string $content
      */
-    public function __construct(string $title, string $introductionText, string $content)
+    public function __construct(int $id, string $title, string $introductionText, string $content)
     {
         if (empty($title)) {
             throw new InvalidArgumentException('Blog title is empty');
@@ -39,6 +42,7 @@ class Blog
         $this->title = $title;
         $this->introductionText = $introductionText;
         $this->content = $content;
+        $this->id = $id;
     }
 
     /**
@@ -48,7 +52,7 @@ class Blog
     public function withImage(string $imageUrl): self
     {
         $blog = clone $this;
-        $this->imageUrl = $imageUrl;
+        $blog->imageUrl = $imageUrl;
 
         return $blog;
     }
@@ -59,6 +63,14 @@ class Blog
     public function getTitle(): string
     {
         return $this->title;
+    }
+
+    /**
+     * @return int
+     */
+    public function getId(): int
+    {
+        return $this->id;
     }
 
     /**

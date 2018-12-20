@@ -2,7 +2,7 @@
 
 require __DIR__ . '/vendor/autoload.php';
 
-$blog = new Marcel\Domain\Blog('Hans', 'Intro', 'Content');
-$blog = $blog->withImage('hans.png');
+$repo = new \Marcel\Application\BlogRepository();
+$a = $repo->fetchAllBlogs();
 
-var_dump($blog);
+var_dump($a);
