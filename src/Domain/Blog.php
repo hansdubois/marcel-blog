@@ -3,8 +3,13 @@ declare(strict_types=1);
 
 namespace Marcel\Domain;
 
-class Blog
+use InvalidArgumentException;
+
+class Blog implements BlogInterface
 {
+    /** @var int */
+    private $id;
+
     /** @var string */
     private $title;
 
@@ -17,13 +22,12 @@ class Blog
     /** @var string */
     private $imageUrl;
 
-    /** @var int */
-    private $id;
-
     /**
+     * @param int $id
      * @param string $title
      * @param string $introductionText
      * @param string $content
+     * @throws InvalidArgumentException
      */
     public function __construct(int $id, string $title, string $introductionText, string $content)
     {
@@ -39,10 +43,10 @@ class Blog
             throw new InvalidArgumentException('Blog content is empty');
         }
 
+        $this->id = $id;
         $this->title = $title;
         $this->introductionText = $introductionText;
         $this->content = $content;
-        $this->id = $id;
     }
 
     /**
@@ -74,14 +78,6 @@ class Blog
     }
 
     /**
-     * @param string $value
-     */
-    public function setImageUrl(string $value)
-    {
-        $this->imageUrl = $value;
-    }
-
-    /**
      * @return string
      */
     public function getIntroductionText(): string
@@ -97,11 +93,13 @@ class Blog
         return $this->content;
     }
 
-    /**
-     * @return string
-     */
-    public function getImageUrl(): string
+    public function toArray(): array
     {
-        return $this->imageUrl;
+        return [
+            'id' => $this->getId(),
+            'title' => $this->getTitle(),
+            'content' => $this->getContent(),
+            'introduction' => $this->getIntroductionText()
+        ];
     }
 }
