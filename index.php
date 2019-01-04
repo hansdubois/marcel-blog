@@ -1,8 +1,9 @@
 <?php
 
+use Marcel\Infrastructure\CsvBlogRepository;
+use Marcel\Infrastructure\JSONBlogController;
+
 require __DIR__ . '/vendor/autoload.php';
 
-$repo = new \Marcel\Application\BlogRepository();
-$a = $repo->fetchAllBlogs();
-
-var_dump($a);
+$controller = new JSONBlogController(new CsvBlogRepository());
+var_dump($controller->parseRequest($_GET));
