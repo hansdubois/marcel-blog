@@ -10,6 +10,14 @@ use Marcel\Domain\Blog;
 
 class CsvBlogRepository implements BlogRepositoryInterface
 {
+    /** @var string */
+    private $blogCsvLocation;
+
+    public function __construct(string $blogCsvLocation)
+    {
+        $this->blogCsvLocation = $blogCsvLocation;
+    }
+
     /**
      * @return array
      * @throws InvalidArgumentException
@@ -18,7 +26,7 @@ class CsvBlogRepository implements BlogRepositoryInterface
     {
         $blogs = [];
 
-        if (($handle = fopen(__DIR__ . '/../../etc/blogs.csv','rb')) !== false) {
+        if (($handle = fopen($this->blogCsvLocation,'rb')) !== false) {
             while (($data = fgetcsv($handle, 1000, ',')) !== false) {
                 $blog = new Blog((int)$data[0], (string)$data[1], (string)$data[2], (string)$data[3]);
 
@@ -44,7 +52,7 @@ class CsvBlogRepository implements BlogRepositoryInterface
     {
         $blog = null;
 
-        if (($handle = fopen(__DIR__ . '/../../etc/blogs.csv','rb')) !== false) {
+        if (($handle = fopen($this->blogCsvLocation,'rb')) !== false) {
             while (($data = fgetcsv($handle, 1000, ',')) !== false) {
                 if ((int)$data[0] === $articleId) {
                     $blog = new Blog($articleId, (string)$data[1], (string)$data[2], (string)$data[3]);

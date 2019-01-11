@@ -1,7 +1,8 @@
 {
     "name": "hansdubois/marcel-blog",
     "require": {
-        "phpunit/phpunit": "^7.5"
+        "phpunit/phpunit": "^7.5",
+      "ext-pdo": "*"
     },
     "autoload": {
         "psr-4": {
