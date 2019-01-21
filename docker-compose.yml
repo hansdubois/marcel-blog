@@ -1,0 +1,36 @@
+version: '2'
+services:
+  marcel-php:
+    container_name: marcel-php
+    build: ./docker/php/
+    links:
+      - marcel-database
+    expose:
+      - 9000
+    volumes_from:
+      - marcel-datadisk
+  marcel-nginx:
+    container_name: marcel-nginx
+    build: ./docker/nginx/
+    ports:
+      - 80:80
+      - 443:443
+    volumes_from:
+      - marcel-datadisk
+    depends_on:
+      - marcel-php
+  marcel-datadisk:
+    container_name: marcel-datadisk
+    image: busybox
+    volumes:
+      - .:/development
+    command: /bin/true
+  marcel-database:
+    container_name: marcel-database
+    command: mysqld --sql_mode=""
+    environment:
+      - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+      - MYSQL_DATABASE=blogs
+    image: mysql:5.7
+    ports:
+      - 3306:3306
